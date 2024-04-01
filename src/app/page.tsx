@@ -1,5 +1,6 @@
 import { Mobile } from "@/common/types/general";
 import MobileCard from "@/app/components/MobileCard";
+import SortSection from "@/app/components/SortSection";
 
 export const revalidate = 5;
 
@@ -10,11 +11,14 @@ const Home = async () => {
   const mobiles: Mobile[] = await res.json();
 
   return (
-    <section className={"grid grid-cols-3 gap-6 xl:grid-cols-4"}>
-      {mobiles.map((mobile) => (
-        <MobileCard key={mobile.id} mobile={mobile} />
-      ))}
-    </section>
+    <div>
+      <SortSection />
+      <section className={"mt-10 grid grid-cols-3 gap-6 xl:grid-cols-4"}>
+        {mobiles.map((mobile) => (
+          <MobileCard key={mobile.id} mobile={mobile} />
+        ))}
+      </section>
+    </div>
   );
 };
 
