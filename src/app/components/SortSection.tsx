@@ -43,9 +43,7 @@ const SortBtn = (props: {
 
 const SortSection = () => {
   return (
-    <div
-      className={"mt-5 flex items-center gap-4 border-b border-gray-300 pb-2"}
-    >
+    <div className={"flex items-center gap-4 border-b border-gray-300 pb-2"}>
       <p className={"flex items-center font-medium"}>
         <SortIcon className={"mr-1"} /> Sort By:
       </p>

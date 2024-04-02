@@ -7,18 +7,30 @@ type Props = {
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   >;
+  label: string;
+  wrapperClasses?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-const Input = ({ className, icon, iconProps, ...props }: Props) => {
+const Input = ({
+  label,
+  wrapperClasses,
+  className,
+  icon,
+  iconProps,
+  ...props
+}: Props) => {
   return (
-    <div
-      className={
-        "flex justify-between rounded-md border border-slate-300 px-3 py-2 " +
-        className
-      }
-    >
-      <input {...props} className={"outline-none"} />
-      {!!icon && <IconBtn {...iconProps}>{icon}</IconBtn>}
+    <div className={wrapperClasses}>
+      {!!label && <p className={"mb-1 italic text-slate-900"}>{label}</p>}
+      <div
+        className={
+          "flex justify-between rounded-md border border-slate-300 px-3 py-2 " +
+          className
+        }
+      >
+        <input {...props} className={"w-full outline-none"} />
+        {!!icon && <IconBtn {...iconProps}>{icon}</IconBtn>}
+      </div>
     </div>
   );
 };
