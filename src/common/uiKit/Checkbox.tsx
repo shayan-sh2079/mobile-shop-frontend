@@ -34,15 +34,13 @@ const Checkbox = ({
           className={
             "absolute inset-0 h-full w-full flex-initial cursor-pointer opacity-0"
           }
-          // checked={checked}
+          checked={checked}
           onChange={onChange}
           {...inputProps}
         />
       </div>
       {!!label && (
-        <label className={"ml-2 cursor-pointer text-sm text-slate-900"}>
-          {label}
-        </label>
+        <label className={"ml-2 text-sm text-slate-900"}>{label}</label>
       )}
     </div>
   );

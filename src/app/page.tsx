@@ -6,9 +6,18 @@ import FilterSection from "@/app/components/FilterSection";
 export const revalidate = 5;
 
 const Home = async ({ searchParams }: { searchParams: SearchParams }) => {
-  const query = searchParams?.["order"] ? `?o=${searchParams["order"]}` : "";
+  const query = searchParams?.["order"] ? `o=${searchParams["order"]}` : "";
+  const searchParam = new URLSearchParams(query);
+  if (typeof searchParams?.["brands"] === "string")
+    searchParam.set("brands", searchParams["brands"]);
+  else if (Array.isArray(searchParams?.["brands"])) {
+    for (const i in searchParams["brands"]) {
+      searchParam.append("brands", searchParams["brands"][i]);
+    }
+  }
+
   const res = await fetch(
-    process.env.NEXT_PUBLIC_API_ROOT + "/mobiles/" + query,
+    process.env.NEXT_PUBLIC_API_ROOT + "/mobiles/?" + searchParam.toString(),
   );
   if (!res.ok) return null;
 

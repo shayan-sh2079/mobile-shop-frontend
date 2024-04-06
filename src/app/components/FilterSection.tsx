@@ -2,6 +2,7 @@
 import Accordion from "@/common/uiKit/Accordion";
 import Checkbox from "@/common/uiKit/Checkbox";
 import RangeSelector from "@/common/uiKit/RangeSelector";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const BRANDS = [
   {
@@ -14,6 +15,12 @@ const BRANDS = [
 ];
 
 const FilterSection = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const mutableSearchParams = new URLSearchParams(searchParams);
+
+  const brands = searchParams.getAll("brands");
+
   return (
     <div
       className={
@@ -23,7 +30,21 @@ const FilterSection = () => {
       <p className={"mb-5 mt-4 text-2xl text-slate-800"}>Filters</p>
       <Accordion title={"Brand"}>
         {BRANDS.map((brand, idx) => (
-          <Checkbox label={brand.title} value={brand.value} key={idx} />
+          <Checkbox
+            label={brand.title}
+            value={brand.value}
+            onChange={() => {
+              if (brands.includes(brand.value)) {
+                mutableSearchParams.delete("brands", brand.value);
+              } else {
+                mutableSearchParams.append("brands", brand.value);
+              }
+
+              router.push(`/?${mutableSearchParams.toString()}`);
+            }}
+            checked={brands.includes(brand.value)}
+            key={idx}
+          />
         ))}
       </Accordion>
       <Accordion title={"Price"}>
