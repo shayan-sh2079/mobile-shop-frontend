@@ -34,7 +34,7 @@ const Checkbox = ({
           className={
             "absolute inset-0 h-full w-full flex-initial cursor-pointer opacity-0"
           }
-          checked={checked}
+          // checked={checked}
           onChange={onChange}
           {...inputProps}
         />

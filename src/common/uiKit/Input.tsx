@@ -7,7 +7,7 @@ type Props = {
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   >;
-  label: string;
+  label?: string;
   wrapperClasses?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
@@ -28,7 +28,7 @@ const Input = ({
           className
         }
       >
-        <input {...props} className={"w-full outline-none"} />
+        <input {...props} className={"w-full bg-transparent outline-none"} />
         {!!icon && <IconBtn {...iconProps}>{icon}</IconBtn>}
       </div>
     </div>
