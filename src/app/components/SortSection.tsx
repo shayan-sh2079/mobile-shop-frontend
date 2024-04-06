@@ -1,13 +1,15 @@
+"use client";
 import SortIcon from "@/common/icons/SortIcon";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const SORT_OPTIONS = [
   {
     title: "Price: Low to High",
-    value: "lowest_price",
+    value: "price",
   },
   {
     title: "Price: High to Low",
-    value: "highest_price",
+    value: "-price",
   },
   {
     title: "Newest",
@@ -23,37 +25,31 @@ const SORT_OPTIONS = [
   },
 ];
 
-const SortBtn = (props: {
-  title: string;
-  value: string;
-  activeValue: string;
-}) => {
-  return (
-    <button
-      className={
-        props.value === props.activeValue
-          ? "text-red-500"
-          : "text-gray-700 hover:text-gray-500"
-      }
-    >
-      {props.title}
-    </button>
-  );
-};
-
 const SortSection = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const mutableSearchParams = new URLSearchParams(searchParams);
+
   return (
     <div className={"flex items-center gap-4 border-b border-gray-300 pb-2"}>
       <p className={"flex items-center font-medium"}>
         <SortIcon className={"mr-1"} /> Sort By:
       </p>
       {SORT_OPTIONS.map((option, idx) => (
-        <SortBtn
-          title={option.title}
-          value={option.value}
+        <button
+          className={
+            option.value === searchParams.get("order")
+              ? "text-red-500"
+              : "text-gray-700 hover:text-gray-500"
+          }
+          onClick={() => {
+            mutableSearchParams.set("order", option.value);
+            router.push(`/?${mutableSearchParams.toString()}`);
+          }}
           key={idx}
-          activeValue={"newest"}
-        />
+        >
+          {option.title}
+        </button>
       ))}
     </div>
   );

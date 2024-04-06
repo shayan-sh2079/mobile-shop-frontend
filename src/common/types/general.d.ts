@@ -9,3 +9,5 @@ export type Mobile = {
   score: number;
   price: number;
 };
+
+export type SearchParams = Record<string, string> | undefined;
