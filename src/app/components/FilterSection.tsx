@@ -3,6 +3,11 @@ import Accordion from "@/common/uiKit/Accordion";
 import Checkbox from "@/common/uiKit/Checkbox";
 import RangeSelector from "@/common/uiKit/RangeSelector";
 import { useRouter, useSearchParams } from "next/navigation";
+import SelectedFilters from "@/app/components/SelectedFilters";
+
+type Props = {
+  price: { min: number; max: number };
+};
 
 const BRANDS = [
   {
@@ -14,7 +19,7 @@ const BRANDS = [
   { title: "Nokia", value: "nokia" },
 ];
 
-const FilterSection = () => {
+const FilterSection = (props: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mutableSearchParams = new URLSearchParams(searchParams);
@@ -28,6 +33,11 @@ const FilterSection = () => {
       }
     >
       <p className={"mb-5 mt-4 text-2xl text-slate-800"}>Filters</p>
+      <SelectedFilters
+        brands={brands}
+        mutableSearchParams={mutableSearchParams}
+        router={router}
+      />
       <Accordion title={"Brand"}>
         {BRANDS.map((brand, idx) => (
           <Checkbox
@@ -49,9 +59,23 @@ const FilterSection = () => {
       </Accordion>
       <Accordion title={"Price"}>
         <RangeSelector
-          min={2000}
-          max={14000}
-          onChange={({ min, max }) => console.log(min, max)}
+          min={props.price.min}
+          max={props.price.max}
+          initialValues={
+            searchParams.get("min_price") !== null &&
+            searchParams.get("max_price") !== null
+              ? {
+                  min: +(searchParams.get("min_price") as string),
+                  max: +(searchParams.get("max_price") as string),
+                }
+              : undefined
+          }
+          onChange={({ min, max }) => {
+            const mutableSearchParams = new URLSearchParams(searchParams);
+            mutableSearchParams.set("min_price", min.toString());
+            mutableSearchParams.set("max_price", max.toString());
+            router.push(`/?${mutableSearchParams.toString()}`);
+          }}
         />
       </Accordion>
     </div>

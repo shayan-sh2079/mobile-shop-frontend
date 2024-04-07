@@ -15,6 +15,13 @@ const Home = async ({ searchParams }: { searchParams: SearchParams }) => {
       searchParam.append("brands", searchParams["brands"][i]);
     }
   }
+  if (searchParams && "min_price" in searchParams) {
+    searchParam.set("price__gte", searchParams.min_price as string);
+    searchParam.set("price__lte", searchParams.max_price as string);
+  }
+
+  if (searchParams && "search" in searchParams)
+    searchParam.set("search", searchParams.search as string);
 
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_ROOT + "/mobiles/?" + searchParam.toString(),
@@ -29,7 +36,9 @@ const Home = async ({ searchParams }: { searchParams: SearchParams }) => {
 
   return (
     <div className={"mt-14 flex gap-4"}>
-      <FilterSection />
+      <FilterSection
+        price={{ min: mobiles.lowest_price, max: mobiles.highest_price }}
+      />
       <div className={"basis-3/4 xl:basis-5/6"}>
         <SortSection />
         <section className={"mt-10 grid grid-cols-3 gap-6 xl:grid-cols-4"}>

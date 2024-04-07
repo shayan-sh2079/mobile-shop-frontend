@@ -3,11 +3,10 @@ import type { Metadata } from "next";
 import { Roboto_Serif } from "next/font/google";
 import "@/app/global.css";
 import React from "react";
-import Input from "@/common/uiKit/Input";
-import SearchIcon from "@/common/icons/SearchIcon";
 import IconBtn from "@/common/uiKit/IconBtn";
 import PersonIcon from "@/common/icons/PersonIcon";
 import CartIcon from "@/common/icons/CartIcon";
+import SearchInput from "@/app/components/SearchInput";
 
 const robotoSerif = Roboto_Serif({
   subsets: ["latin"],
@@ -41,11 +40,7 @@ export default function RootLayout({
               <h1 className={"text-4xl font-bold text-yellow-400"}>
                 MOBILE SHOP
               </h1>
-              <Input
-                placeholder={"search..."}
-                className={"w-80"}
-                icon={<SearchIcon className={"fill-gray-500"} />}
-              />
+              <SearchInput />
             </div>
             <div className={"flex items-center gap-2"}>
               <IconBtn>

@@ -147,6 +147,17 @@ const RangeFilter: React.FC<Props> = ({
   if (step === -1) step = Math.floor((max - min) / 50);
 
   useEffect(() => {
+    setValues({
+      min: initialValues?.min || min,
+      max: initialValues?.max || max,
+    });
+    setInputValues({
+      min: initialValues?.min || min,
+      max: initialValues?.max || max,
+    });
+  }, [initialValues?.min, initialValues?.max]);
+
+  useEffect(() => {
     if (
       initialValues?.min !== undefined &&
       initialValues?.max !== undefined &&
@@ -263,6 +274,9 @@ const RangeFilter: React.FC<Props> = ({
 };
 
 const compareProps = (prevProps: Props, nextProps: Props) =>
-  prevProps.min === nextProps.min && prevProps.max === nextProps.max;
+  prevProps.min === nextProps.min &&
+  prevProps.max === nextProps.max &&
+  prevProps.initialValues?.min === nextProps.initialValues?.min &&
+  prevProps.initialValues?.max === nextProps.initialValues?.max;
 
 export default memo(RangeFilter, compareProps);
