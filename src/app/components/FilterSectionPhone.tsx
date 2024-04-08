@@ -18,7 +18,7 @@ const FiltersDialogDynamic = dynamic(
   { ssr: false },
 );
 
-const FilterSectionMobile = (props: Props) => {
+const FilterSectionPhone = (props: Props) => {
   const isDesktop = useBreakpoint();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -55,4 +55,4 @@ const FilterSectionMobile = (props: Props) => {
   );
 };
 
-export default FilterSectionMobile;
+export default FilterSectionPhone;

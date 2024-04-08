@@ -14,7 +14,7 @@ const robotoSerif = Roboto_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Mobile Shop",
+  title: "Phone Shop",
   description: "A sample project with Nextjs",
 };
 
@@ -38,7 +38,7 @@ export default function RootLayout({
           >
             <div className={"flex items-center gap-6"}>
               <h1 className={"text-2xl font-bold text-yellow-400 lg:text-4xl"}>
-                MOBILE SHOP
+                PHONE SHOP
               </h1>
               <SearchInput />
             </div>

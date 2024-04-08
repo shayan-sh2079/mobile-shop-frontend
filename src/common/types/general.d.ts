@@ -1,6 +1,6 @@
 export type IconsProps = { className?: string };
 
-export type Mobile = {
+export type Phone = {
   id: number;
   name: string;
   brand: string;
