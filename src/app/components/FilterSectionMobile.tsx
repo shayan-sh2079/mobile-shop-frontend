@@ -6,6 +6,10 @@ import useBreakpoint from "@/common/hooks/useBreakpoint";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
+type Props = {
+  price: { min: number; max: number };
+};
+
 const SortDialogDynamic = dynamic(() => import("@/app/components/SortDialog"), {
   ssr: false,
 });
@@ -14,7 +18,7 @@ const FiltersDialogDynamic = dynamic(
   { ssr: false },
 );
 
-const FilterSectionMobile = () => {
+const FilterSectionMobile = (props: Props) => {
   const isDesktop = useBreakpoint();
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -42,7 +46,10 @@ const FilterSectionMobile = () => {
       </div>
       {isSortOpen && <SortDialogDynamic onClose={() => setIsSortOpen(false)} />}
       {isFiltersOpen && (
-        <FiltersDialogDynamic onClose={() => setIsFiltersOpen(false)} />
+        <FiltersDialogDynamic
+          onClose={() => setIsFiltersOpen(false)}
+          price={props.price}
+        />
       )}
     </>
   );

@@ -38,7 +38,9 @@ const Home = async ({ searchParams }: { searchParams: SearchParams }) => {
 
   return (
     <div className={"mt-6 flex w-full flex-col gap-4 lg:mt-14 lg:flex-row"}>
-      <FilterSectionMobile />
+      <FilterSectionMobile
+        price={{ min: mobiles.lowest_price, max: mobiles.highest_price }}
+      />
       <FilterSection
         price={{ min: mobiles.lowest_price, max: mobiles.highest_price }}
       />

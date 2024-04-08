@@ -20,3 +20,13 @@ export const SORT_OPTIONS = [
     value: "rate",
   },
 ];
+
+export const BRANDS = [
+  {
+    title: "Samsung",
+    value: "samsung",
+  },
+  { title: "Apple", value: "apple" },
+  { title: "Xiaomi", value: "xiaomi" },
+  { title: "Nokia", value: "nokia" },
+];

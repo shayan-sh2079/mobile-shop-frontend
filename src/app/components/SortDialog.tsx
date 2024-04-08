@@ -14,7 +14,7 @@ const SortDialog = (props: Props) => {
 
   return (
     <DialogWrapper title={"Sort"} onClose={props.onClose}>
-      <div className={"mt-10 flex flex-col items-center gap-4"}>
+      <div className={"flex flex-col items-center gap-4"}>
         {SORT_OPTIONS.map((option, idx) => (
           <button
             key={idx}

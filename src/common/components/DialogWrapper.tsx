@@ -18,7 +18,9 @@ const DialogWrapper = (props: Props) => {
       role='presentation'
     >
       <div
-        className={"flex justify-between border-b border-gray-300 px-4 py-3"}
+        className={
+          "mb-10 flex justify-between border-b border-gray-300 px-4 py-3"
+        }
       >
         <p className={"font-medium text-slate-900"}>{props.title}</p>
         <IconBtn onClick={props.onClose}>
