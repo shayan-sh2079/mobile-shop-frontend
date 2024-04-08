@@ -33,11 +33,11 @@ export default function RootLayout({
         >
           <div
             className={
-              "mx-auto flex h-20 w-full max-w-screen-2xl items-center justify-between lg:px-6"
+              "mx-auto flex h-14 w-full max-w-screen-2xl items-center justify-between px-4 lg:h-20 lg:px-6"
             }
           >
             <div className={"flex items-center gap-6"}>
-              <h1 className={"text-4xl font-bold text-yellow-400"}>
+              <h1 className={"text-2xl font-bold text-yellow-400 lg:text-4xl"}>
                 MOBILE SHOP
               </h1>
               <SearchInput />
@@ -53,7 +53,9 @@ export default function RootLayout({
             </div>
           </div>
         </header>
-        <main className={"mx-auto max-w-screen-2xl lg:px-6"}>{children}</main>
+        <main className={"mx-auto max-w-screen-2xl px-4 lg:px-6"}>
+          {children}
+        </main>
       </body>
     </html>
   );

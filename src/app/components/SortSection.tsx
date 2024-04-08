@@ -1,29 +1,7 @@
 "use client";
 import SortIcon from "@/common/icons/SortIcon";
 import { useSearchParams, useRouter } from "next/navigation";
-
-const SORT_OPTIONS = [
-  {
-    title: "Price: Low to High",
-    value: "price",
-  },
-  {
-    title: "Price: High to Low",
-    value: "-price",
-  },
-  {
-    title: "Newest",
-    value: "newest",
-  },
-  {
-    title: "Most Sells",
-    value: "sells",
-  },
-  {
-    title: "Highest Rate",
-    value: "rate",
-  },
-];
+import { SORT_OPTIONS } from "@/common/constants/filters";
 
 const SortSection = () => {
   const searchParams = useSearchParams();
@@ -31,7 +9,11 @@ const SortSection = () => {
   const mutableSearchParams = new URLSearchParams(searchParams);
 
   return (
-    <div className={"flex items-center gap-4 border-b border-gray-300 pb-2"}>
+    <div
+      className={
+        "hidden items-center gap-4 border-b border-gray-300 pb-2 lg:flex"
+      }
+    >
       <p className={"flex items-center font-medium"}>
         <SortIcon className={"mr-1"} /> Sort By:
       </p>

@@ -13,7 +13,7 @@ const MobileCard = ({ mobile }: Props) => {
     <Link
       href={`/mobile/${mobile.id}/${encodeURIComponent(mobile.name)}`}
       className={
-        "col-span-1 rounded-md border border-gray-300 p-3 hover:shadow-2xl"
+        "col-span-1 rounded-md border border-gray-300 p-3 hover:shadow-lg"
       }
     >
       <Image

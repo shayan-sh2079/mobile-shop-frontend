@@ -23,6 +23,7 @@ const SearchInput = () => {
         mutableSearchParams.set("search", search);
         router.push(`/?${mutableSearchParams.toString()}`);
       }}
+      className={"hidden lg:block"}
     >
       <div
         className={
