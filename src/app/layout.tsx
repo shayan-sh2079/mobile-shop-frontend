@@ -7,6 +7,8 @@ import IconBtn from "@/common/uiKit/IconBtn";
 import PersonIcon from "@/common/icons/PersonIcon";
 import CartIcon from "@/common/icons/CartIcon";
 import SearchInput from "@/app/components/SearchInput";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const robotoSerif = Roboto_Serif({
   subsets: ["latin"],
@@ -56,6 +58,12 @@ export default function RootLayout({
         <main className={"mx-auto max-w-screen-2xl px-4 lg:px-6"}>
           {children}
         </main>
+        <ToastContainer
+          limit={3}
+          theme='dark'
+          position={"top-center"}
+          toastClassName={"lg:!rounded-md"}
+        />
       </body>
     </html>
   );
