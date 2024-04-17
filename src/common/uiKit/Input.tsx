@@ -13,6 +13,7 @@ type Props = {
   >;
   label?: string;
   wrapperClasses?: string;
+  error?: string;
 } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 const Input = forwardRef<HTMLInputElement, Props>(
@@ -33,6 +34,9 @@ const Input = forwardRef<HTMLInputElement, Props>(
           />
           {!!icon && <IconBtn {...iconProps}>{icon}</IconBtn>}
         </div>
+        {props.error && (
+          <p className={"text-sm italic text-red-700"}>{props.error}</p>
+        )}
       </div>
     );
   },
