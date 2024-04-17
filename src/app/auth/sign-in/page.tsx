@@ -33,7 +33,7 @@ const validationSchema = z
     path: ["repeatPass"],
   });
 
-const SignUpForm = () => {
+const SignInPage = () => {
   const [showPass, setShowPass] = useState(false);
   const [showRepeatPass, setShowRepeatPass] = useState(false);
   const {
@@ -93,4 +93,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInPage;
