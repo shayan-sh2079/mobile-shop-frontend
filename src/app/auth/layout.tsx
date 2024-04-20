@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { isLoggedIn } from "@/common/functions/auth";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
-  if (isLoggedIn()) redirect("/");
+  if (isLoggedIn()) router.push("/");
 
   return (
     <div className={"flex h-[calc(100vh_-_81px)] items-center justify-center"}>

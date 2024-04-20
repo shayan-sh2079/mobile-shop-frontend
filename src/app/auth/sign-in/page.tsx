@@ -5,12 +5,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import {
   emailValidation,
-  passValidation,
-  REPEAT_PASS_ERR,
   requiredFieldValidation,
 } from "@/common/functions/formValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignUpAPI } from "@/app/auth/sign-up/api";
+import { SignInAPI } from "@/app/auth/sign-in/api";
 import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
@@ -19,23 +17,15 @@ import { useRouter } from "next/navigation";
 type Inputs = {
   email: string;
   pass: string;
-  repeatPass: string;
 };
 
-const validationSchema = z
-  .object({
-    email: emailValidation,
-    pass: passValidation,
-    repeatPass: requiredFieldValidation,
-  })
-  .refine(({ repeatPass, pass }) => repeatPass === pass, {
-    message: REPEAT_PASS_ERR,
-    path: ["repeatPass"],
-  });
+const validationSchema = z.object({
+  email: emailValidation,
+  pass: requiredFieldValidation,
+});
 
 const SignInPage = () => {
   const [showPass, setShowPass] = useState(false);
-  const [showRepeatPass, setShowRepeatPass] = useState(false);
   const {
     register,
     handleSubmit,
@@ -44,7 +34,7 @@ const SignInPage = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const isSuccessful = await SignUpAPI({
+    const isSuccessful = await SignInAPI({
       email: data.email,
       password: data.pass,
     });
@@ -52,7 +42,11 @@ const SignInPage = () => {
   };
 
   return (
-    <form className={"flex flex-col gap-3"} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={"flex flex-col gap-3"}
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete={"off"}
+    >
       <Input
         placeholder={"email"}
         {...register("email")}
@@ -72,22 +66,8 @@ const SignInPage = () => {
         }
         iconProps={{ onClick: () => setShowPass((prev) => !prev) }}
       />
-      <Input
-        placeholder={"repeat password"}
-        {...register("repeatPass")}
-        error={errors.repeatPass?.message}
-        type={showRepeatPass ? "text" : "password"}
-        icon={
-          showRepeatPass ? (
-            <EyeSlashIcon className={"text-gray-500"} />
-          ) : (
-            <EyeIcon className={"text-gray-500"} />
-          )
-        }
-        iconProps={{ onClick: () => setShowRepeatPass((prev) => !prev) }}
-      />
       <Button type={"submit"} isLoading={isSubmitting}>
-        Sign Up
+        Sign In
       </Button>
     </form>
   );

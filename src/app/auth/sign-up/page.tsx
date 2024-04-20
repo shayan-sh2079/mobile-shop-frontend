@@ -52,7 +52,11 @@ const SignUpPage = () => {
   };
 
   return (
-    <form className={"flex flex-col gap-3"} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={"flex flex-col gap-3"}
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete={"off"}
+    >
       <Input
         placeholder={"email"}
         {...register("email")}
