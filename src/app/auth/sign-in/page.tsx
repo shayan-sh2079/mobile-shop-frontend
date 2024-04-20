@@ -8,12 +8,13 @@ import {
   requiredFieldValidation,
 } from "@/common/functions/formValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignInAPI } from "@/app/auth/sign-in/api";
+import { getOrderAPI, sendOrderAPI, signInAPI } from "@/app/auth/sign-in/api";
 import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ANON_CART, CART } from "@/common/constants/general";
 
 type Inputs = {
   email: string;
@@ -35,11 +36,35 @@ const SignInPage = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const isSuccessful = await SignInAPI({
+    const isSuccessful = await signInAPI({
       email: data.email,
       password: data.pass,
     });
-    if (isSuccessful) router.push("/auth/sign-in");
+    if (isSuccessful) {
+      const anonCartItems: Record<number, number> = JSON.parse(
+        localStorage.getItem(ANON_CART) || "{}",
+      );
+      if (!anonCartItems) {
+        const items = await sendOrderAPI({
+          mobiles: Object.keys(anonCartItems),
+          quantities: Object.values(anonCartItems),
+        });
+        const cartItems: Record<number, number> = {};
+        items?.items.forEach((item) => {
+          cartItems[item.mobile.id] = item.quantity;
+        });
+        localStorage.setItem(CART, JSON.stringify(cartItems));
+        localStorage.removeItem(ANON_CART);
+      } else {
+        const items = await getOrderAPI();
+        const cartItems: Record<number, number> = {};
+        items?.items.forEach((item) => {
+          cartItems[item.mobile.id] = item.quantity;
+        });
+        localStorage.setItem(CART, JSON.stringify(cartItems));
+      }
+    }
+    router.push("/");
   };
 
   return (

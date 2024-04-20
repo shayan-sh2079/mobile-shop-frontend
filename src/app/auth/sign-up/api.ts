@@ -8,7 +8,7 @@ type SignUpData = {
   password: string;
 };
 
-export const SignUpAPI = async (data: SignUpData) => {
+export const signUpAPI = async (data: SignUpData) => {
   try {
     await noTokenAxios.post("/users/register/", data);
     toast.success(SUCCESS_MSG);

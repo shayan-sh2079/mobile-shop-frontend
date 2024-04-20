@@ -10,7 +10,7 @@ import {
   requiredFieldValidation,
 } from "@/common/functions/formValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignUpAPI } from "@/app/auth/sign-up/api";
+import { signUpAPI } from "@/app/auth/sign-up/api";
 import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
@@ -45,7 +45,7 @@ const SignUpPage = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const isSuccessful = await SignUpAPI({
+    const isSuccessful = await signUpAPI({
       email: data.email,
       password: data.pass,
     });
