@@ -15,6 +15,7 @@ import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Inputs = {
   email: string;
@@ -52,48 +53,56 @@ const SignUpPage = () => {
   };
 
   return (
-    <form
-      className={"flex flex-col gap-3"}
-      onSubmit={handleSubmit(onSubmit)}
-      autoComplete={"off"}
-    >
-      <Input
-        placeholder={"email"}
-        {...register("email")}
-        error={errors.email?.message}
-      />
-      <Input
-        placeholder={"password"}
-        {...register("pass")}
-        error={errors.pass?.message}
-        type={showPass ? "text" : "password"}
-        icon={
-          showPass ? (
-            <EyeSlashIcon className={"text-gray-500"} />
-          ) : (
-            <EyeIcon className={"text-gray-500"} />
-          )
-        }
-        iconProps={{ onClick: () => setShowPass((prev) => !prev) }}
-      />
-      <Input
-        placeholder={"repeat password"}
-        {...register("repeatPass")}
-        error={errors.repeatPass?.message}
-        type={showRepeatPass ? "text" : "password"}
-        icon={
-          showRepeatPass ? (
-            <EyeSlashIcon className={"text-gray-500"} />
-          ) : (
-            <EyeIcon className={"text-gray-500"} />
-          )
-        }
-        iconProps={{ onClick: () => setShowRepeatPass((prev) => !prev) }}
-      />
-      <Button type={"submit"} isLoading={isSubmitting}>
-        Sign Up
-      </Button>
-    </form>
+    <>
+      <form
+        className={"flex w-full flex-col gap-3"}
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete={"off"}
+      >
+        <Input
+          placeholder={"email"}
+          {...register("email")}
+          error={errors.email?.message}
+        />
+        <Input
+          placeholder={"password"}
+          {...register("pass")}
+          error={errors.pass?.message}
+          type={showPass ? "text" : "password"}
+          icon={
+            showPass ? (
+              <EyeSlashIcon className={"text-gray-500"} />
+            ) : (
+              <EyeIcon className={"text-gray-500"} />
+            )
+          }
+          iconProps={{ onClick: () => setShowPass((prev) => !prev) }}
+        />
+        <Input
+          placeholder={"repeat password"}
+          {...register("repeatPass")}
+          error={errors.repeatPass?.message}
+          type={showRepeatPass ? "text" : "password"}
+          icon={
+            showRepeatPass ? (
+              <EyeSlashIcon className={"text-gray-500"} />
+            ) : (
+              <EyeIcon className={"text-gray-500"} />
+            )
+          }
+          iconProps={{ onClick: () => setShowRepeatPass((prev) => !prev) }}
+        />
+        <Button type={"submit"} isLoading={isSubmitting}>
+          Sign Up
+        </Button>
+      </form>
+      <div className={"flex w-full justify-between"}>
+        <p>Already have an account?</p>
+        <Link href={"/auth/sign-in"} className={"text-sm text-sky-700"}>
+          Sign In
+        </Link>
+      </div>
+    </>
   );
 };
 

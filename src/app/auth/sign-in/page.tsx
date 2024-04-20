@@ -13,6 +13,7 @@ import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Inputs = {
   email: string;
@@ -42,34 +43,42 @@ const SignInPage = () => {
   };
 
   return (
-    <form
-      className={"flex flex-col gap-3"}
-      onSubmit={handleSubmit(onSubmit)}
-      autoComplete={"off"}
-    >
-      <Input
-        placeholder={"email"}
-        {...register("email")}
-        error={errors.email?.message}
-      />
-      <Input
-        placeholder={"password"}
-        {...register("pass")}
-        error={errors.pass?.message}
-        type={showPass ? "text" : "password"}
-        icon={
-          showPass ? (
-            <EyeSlashIcon className={"text-gray-500"} />
-          ) : (
-            <EyeIcon className={"text-gray-500"} />
-          )
-        }
-        iconProps={{ onClick: () => setShowPass((prev) => !prev) }}
-      />
-      <Button type={"submit"} isLoading={isSubmitting}>
-        Sign In
-      </Button>
-    </form>
+    <>
+      <form
+        className={"flex w-full flex-col gap-3"}
+        onSubmit={handleSubmit(onSubmit)}
+        autoComplete={"off"}
+      >
+        <Input
+          placeholder={"email"}
+          {...register("email")}
+          error={errors.email?.message}
+        />
+        <Input
+          placeholder={"password"}
+          {...register("pass")}
+          error={errors.pass?.message}
+          type={showPass ? "text" : "password"}
+          icon={
+            showPass ? (
+              <EyeSlashIcon className={"text-gray-500"} />
+            ) : (
+              <EyeIcon className={"text-gray-500"} />
+            )
+          }
+          iconProps={{ onClick: () => setShowPass((prev) => !prev) }}
+        />
+        <Button type={"submit"} isLoading={isSubmitting}>
+          Sign In
+        </Button>
+      </form>
+      <div className={"flex w-full justify-between"}>
+        <p>Don&apos;t have an account?</p>
+        <Link href={"/auth/sign-up"} className={"text-sm text-sky-700"}>
+          Sign Up
+        </Link>
+      </div>
+    </>
   );
 };
 
