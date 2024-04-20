@@ -14,7 +14,7 @@ import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ANON_CART, CART } from "@/common/constants/general";
+import { CART, IS_CART_ANON } from "@/common/constants/general";
 import { addToCartAPI } from "@/common/api/cart";
 
 type Inputs = {
@@ -42,12 +42,10 @@ const SignInPage = () => {
       password: data.pass,
     });
     if (isSuccessful) {
-      const anonCartItems: Record<number, number> = JSON.parse(
-        localStorage.getItem(ANON_CART) || "{}",
-      );
-      if (!anonCartItems) {
-        await addToCartAPI(anonCartItems);
-        localStorage.removeItem(ANON_CART);
+      const isCartAnon = !!localStorage.getItem(IS_CART_ANON);
+      if (isCartAnon) {
+        await addToCartAPI();
+        localStorage.removeItem(IS_CART_ANON);
       } else {
         const items = await getOrderAPI();
         const cartItems: Record<number, number> = {};

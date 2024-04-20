@@ -5,12 +5,14 @@ import { AxiosError } from "axios";
 import { OrderRes } from "@/common/types/general";
 
 export const addToCartAPI = async (
-  cartItems: Record<number, number>,
   showSuccess = false,
   phoneId?: number,
   count?: number,
 ) => {
   try {
+    const cartItems: Record<number, number> = JSON.parse(
+      localStorage.getItem(CART) || "{}",
+    );
     if (phoneId !== undefined && count !== undefined)
       cartItems[phoneId] = count;
     const res = await axiosWithToken.post<OrderRes>("/orders/order/", {

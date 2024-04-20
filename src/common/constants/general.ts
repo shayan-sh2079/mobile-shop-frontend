@@ -9,7 +9,7 @@ export const FAIL_MSG = "Something went wrong";
 export const SUCCESS_MSG = "Successful";
 
 // LOCAL STORAGE
-export const ANON_CART = "anonymous_cart_items";
+export const IS_CART_ANON = "is_anonymous_cart";
 export const CART = "cart_items";
 
 // REGEXES

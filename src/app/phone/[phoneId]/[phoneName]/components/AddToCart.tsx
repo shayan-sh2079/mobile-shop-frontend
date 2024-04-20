@@ -1,9 +1,9 @@
 "use client";
 import Button from "@/common/uiKit/Button";
 import {
-  ANON_CART,
   ATK,
   CART,
+  IS_CART_ANON,
   RTK,
   SUCCESS_MSG,
 } from "@/common/constants/general";
@@ -23,16 +23,14 @@ const AddToCart = (props: Props) => {
   const [count, setCount] = useState(1);
   const addToCartHandler = async () => {
     if (Cookies.get(ATK) || Cookies.get(RTK)) {
+      await addToCartAPI(true, props.phoneId, count);
+    } else {
       const cartItems: Record<number, number> = JSON.parse(
         localStorage.getItem(CART) || "{}",
       );
-      await addToCartAPI(cartItems, true, props.phoneId, count);
-    } else {
-      const cartItems: Record<number, number> = JSON.parse(
-        localStorage.getItem(ANON_CART) || "{}",
-      );
       cartItems[props.phoneId] = count;
-      localStorage.setItem(ANON_CART, JSON.stringify(cartItems));
+      localStorage.setItem(CART, JSON.stringify(cartItems));
+      localStorage.setItem(IS_CART_ANON, "true");
       toast.success(SUCCESS_MSG);
     }
   };
