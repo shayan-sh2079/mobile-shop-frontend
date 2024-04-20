@@ -8,13 +8,14 @@ import {
   requiredFieldValidation,
 } from "@/common/functions/formValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getOrderAPI, sendOrderAPI, signInAPI } from "@/app/auth/sign-in/api";
+import { getOrderAPI, signInAPI } from "@/app/auth/sign-in/api";
 import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ANON_CART, CART } from "@/common/constants/general";
+import { addToCartAPI } from "@/common/api/cart";
 
 type Inputs = {
   email: string;
@@ -45,15 +46,7 @@ const SignInPage = () => {
         localStorage.getItem(ANON_CART) || "{}",
       );
       if (!anonCartItems) {
-        const items = await sendOrderAPI({
-          mobiles: Object.keys(anonCartItems),
-          quantities: Object.values(anonCartItems),
-        });
-        const cartItems: Record<number, number> = {};
-        items?.items.forEach((item) => {
-          cartItems[item.mobile.id] = item.quantity;
-        });
-        localStorage.setItem(CART, JSON.stringify(cartItems));
+        await addToCartAPI(anonCartItems);
         localStorage.removeItem(ANON_CART);
       } else {
         const items = await getOrderAPI();

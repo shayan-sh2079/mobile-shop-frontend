@@ -1,12 +1,18 @@
 "use client";
 import Button from "@/common/uiKit/Button";
-import { ANON_CART, ATK, RTK, SUCCESS_MSG } from "@/common/constants/general";
+import {
+  ANON_CART,
+  ATK,
+  CART,
+  RTK,
+  SUCCESS_MSG,
+} from "@/common/constants/general";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { addToCartAPI } from "@/app/phone/[phoneId]/[phoneName]/api";
 import PlusIcon from "@/common/icons/PlusIcon";
 import MinusIcon from "@/common/icons/MinusIcon";
 import { toast } from "react-toastify";
+import { addToCartAPI } from "@/common/api/cart";
 
 type Props = {
   price: number;
@@ -17,7 +23,10 @@ const AddToCart = (props: Props) => {
   const [count, setCount] = useState(1);
   const addToCartHandler = async () => {
     if (Cookies.get(ATK) || Cookies.get(RTK)) {
-      await addToCartAPI({ mobile: props.phoneId, quantity: count });
+      const cartItems: Record<number, number> = JSON.parse(
+        localStorage.getItem(CART) || "{}",
+      );
+      await addToCartAPI(cartItems, true, props.phoneId, count);
     } else {
       const cartItems: Record<number, number> = JSON.parse(
         localStorage.getItem(ANON_CART) || "{}",

@@ -10,6 +10,10 @@ export type Phone = {
   price: number;
 };
 
+export type OrderRes = {
+  items: { id: number; quantity: number; mobile: Phone }[];
+};
+
 export type SearchParams = Record<string, string | string[]> | undefined;
 
 export type Screens = "sm" | "md" | "lg" | "xl" | "2xl";
