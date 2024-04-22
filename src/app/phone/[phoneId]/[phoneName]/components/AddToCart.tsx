@@ -1,18 +1,13 @@
 "use client";
 import Button from "@/common/uiKit/Button";
-import {
-  ATK,
-  CART,
-  IS_CART_ANON,
-  RTK,
-  SUCCESS_MSG,
-} from "@/common/constants/general";
+import { ATK, RTK, SUCCESS_MSG } from "@/common/constants/general";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import PlusIcon from "@/common/icons/PlusIcon";
 import MinusIcon from "@/common/icons/MinusIcon";
 import { toast } from "react-toastify";
 import { addToCartAPI } from "@/common/api/cart";
+import useCart from "@/common/store/useCart";
 
 type Props = {
   price: number;
@@ -21,16 +16,30 @@ type Props = {
 
 const AddToCart = (props: Props) => {
   const [count, setCount] = useState(1);
+  const cartItems = useCart();
+
   const addToCartHandler = async () => {
-    if (Cookies.get(ATK) || Cookies.get(RTK)) {
-      await addToCartAPI(true, props.phoneId, count);
+    const newCartItems: { phones: number[]; quantities: number[] } = {
+      phones: [...cartItems.phones],
+      quantities: [...cartItems.quantities],
+    };
+    const newPhoneIdx = newCartItems.phones.findIndex(
+      (phone) => phone === props.phoneId,
+    );
+    if (newPhoneIdx !== -1) {
+      newCartItems.quantities[newPhoneIdx] = count;
     } else {
-      const cartItems: Record<number, number> = JSON.parse(
-        localStorage.getItem(CART) || "{}",
-      );
-      cartItems[props.phoneId] = count;
-      localStorage.setItem(CART, JSON.stringify(cartItems));
-      localStorage.setItem(IS_CART_ANON, "true");
+      newCartItems.phones.push(props.phoneId);
+      newCartItems.quantities.push(count);
+    }
+
+    if (Cookies.get(ATK) || Cookies.get(RTK)) {
+      const newCartData = await addToCartAPI(newCartItems, true);
+      if (newCartData) {
+        cartItems.setCart(newCartData);
+      }
+    } else {
+      cartItems.setAnonCart(newCartItems);
       toast.success(SUCCESS_MSG);
     }
   };

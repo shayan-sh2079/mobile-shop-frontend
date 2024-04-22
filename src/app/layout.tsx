@@ -5,10 +5,10 @@ import "@/app/global.css";
 import React from "react";
 import IconBtn from "@/common/uiKit/IconBtn";
 import PersonIcon from "@/common/icons/PersonIcon";
-import CartIcon from "@/common/icons/CartIcon";
 import SearchInput from "@/app/components/SearchInput";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CartBtn from "@/app/components/CartBtn";
 
 const robotoSerif = Roboto_Serif({
   subsets: ["latin"],
@@ -49,9 +49,7 @@ export default function RootLayout({
                 <PersonIcon className={"fill-gray-600"} />
               </IconBtn>
               <hr className={"h-5 w-px bg-gray-400"} />
-              <IconBtn>
-                <CartIcon className={"fill-gray-600"} />
-              </IconBtn>
+              <CartBtn />
             </div>
           </div>
         </header>

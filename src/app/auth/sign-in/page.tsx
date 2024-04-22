@@ -14,8 +14,8 @@ import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { CART, IS_CART_ANON } from "@/common/constants/general";
 import { addToCartAPI } from "@/common/api/cart";
+import useCart from "@/common/store/useCart";
 
 type Inputs = {
   email: string;
@@ -35,6 +35,7 @@ const SignInPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<Inputs>({ resolver: zodResolver(validationSchema) });
   const router = useRouter();
+  const cartItems = useCart();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const isSuccessful = await signInAPI({
@@ -42,17 +43,15 @@ const SignInPage = () => {
       password: data.pass,
     });
     if (isSuccessful) {
-      const isCartAnon = !!localStorage.getItem(IS_CART_ANON);
-      if (isCartAnon) {
-        await addToCartAPI();
-        localStorage.removeItem(IS_CART_ANON);
-      } else {
-        const items = await getOrderAPI();
-        const cartItems: Record<number, number> = {};
-        items?.items.forEach((item) => {
-          cartItems[item.mobile.id] = item.quantity;
+      if (cartItems.isAnonymous && cartItems.phones.length > 0) {
+        const newCartData = await addToCartAPI({
+          phones: cartItems.phones,
+          quantities: cartItems.quantities,
         });
-        localStorage.setItem(CART, JSON.stringify(cartItems));
+        if (newCartData) cartItems.setCart(newCartData);
+      } else {
+        const newCartData = await getOrderAPI();
+        if (newCartData) cartItems.setCart(newCartData);
       }
     }
     router.push("/");
