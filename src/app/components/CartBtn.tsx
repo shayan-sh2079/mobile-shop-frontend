@@ -14,7 +14,7 @@ const CartBtn = () => {
       </IconBtn>
       <span
         className={
-          "absolute top-full -ml-3 -mt-3 rounded-full bg-red-500 px-1 text-xs text-gray-50"
+          "pointer-events-none absolute top-full -ml-5 -mt-3 rounded-full bg-red-500 px-1 text-xs text-gray-50"
         }
       >
         {data.quantities.reduce(
