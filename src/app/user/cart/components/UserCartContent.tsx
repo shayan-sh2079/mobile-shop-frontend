@@ -3,8 +3,14 @@ import Image from "next/image";
 import EditCartSection from "@/app/user/cart/components/EditCartSection";
 import { OrderRes } from "@/common/types/general";
 import { useState } from "react";
-import { deleteCartItemAPI, editCartItemAPI } from "@/app/user/cart/api";
+import {
+  buyItemsAPI,
+  deleteCartItemAPI,
+  editCartItemAPI,
+} from "@/app/user/cart/api";
 import useCart from "@/common/store/useCart";
+import Button from "@/common/uiKit/Button";
+import { useRouter } from "next/navigation";
 
 type Props = {
   cartData?: OrderRes;
@@ -13,6 +19,7 @@ type Props = {
 const UserCartContent = (props: Props) => {
   const [cartData, setCartData] = useState(props.cartData);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const cartItems = useCart();
 
   const onRemoveHandler = async (phoneId: number) => {
@@ -36,10 +43,17 @@ const UserCartContent = (props: Props) => {
     setIsLoading(false);
   };
 
-  if (!cartData) return <div>You have no items in your cart</div>;
+  const buyHandler = async () => {
+    setIsLoading(true);
+    const isSuccessful = await buyItemsAPI();
+    setIsLoading(false);
+    if (isSuccessful) router.push("/user/history/");
+  };
+
+  if (!cartData?.items.length) return <div>You have no items in your cart</div>;
 
   return (
-    <div className={"mt-10 flex flex-col gap-4"}>
+    <div className={"my-10 flex flex-col gap-4"}>
       {cartData.items.map((item) => (
         <div
           key={item.id}
@@ -72,6 +86,11 @@ const UserCartContent = (props: Props) => {
           />
         </div>
       ))}
+      <div>
+        <Button onClick={buyHandler} isLoading={isLoading}>
+          Buy Items
+        </Button>
+      </div>
     </div>
   );
 };

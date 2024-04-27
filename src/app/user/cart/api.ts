@@ -31,3 +31,15 @@ export const deleteCartItemAPI = async (phoneId: number) => {
     return false;
   }
 };
+
+export const buyItemsAPI = async () => {
+  try {
+    await axiosWithToken.post("/orders/buy/");
+    toast.success(SUCCESS_MSG);
+    return true;
+  } catch (e: unknown) {
+    if (e instanceof AxiosError)
+      toast.error(e.response?.data.message || e.message || FAIL_MSG);
+    return false;
+  }
+};
