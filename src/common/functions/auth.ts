@@ -6,7 +6,7 @@ import {
   RTK,
 } from "@/common/constants/general";
 
-export const isLoggedIn = () => !!Cookies.get(ATK);
+export const isLoggedIn = () => !!Cookies.get(ATK) || !!Cookies.get(RTK);
 
 export const setTokens = (refreshTkn: string, accessTkn: string) => {
   const refreshTokenExpirationDate = new Date(

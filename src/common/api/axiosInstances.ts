@@ -27,15 +27,14 @@ axiosWithToken.interceptors.request.use(
         config.headers["Authorization"] = `Bearer ${accessToken}`;
       else if (cookies().get(RTK)?.value) {
         const refreshToken = cookies().get(RTK)?.value;
-        const res = await noTokenAxios.post<{ access_token: string }>(
-          "/refresh",
+        const res = await noTokenAxios.post<{ access: string }>(
+          "/users/token/refresh/",
           {
-            // eslint-disable-next-line camelcase
-            refresh_token: refreshToken,
+            refresh: refreshToken,
           },
         );
 
-        config.headers["Authorization"] = `Bearer ${res.data.access_token}`;
+        config.headers["Authorization"] = `Bearer ${res.data.access}`;
       }
     } else {
       const accessToken = Cookies.get(ATK);
@@ -44,18 +43,17 @@ axiosWithToken.interceptors.request.use(
         config.headers["Authorization"] = `Bearer ${accessToken}`;
       else if (Cookies.get(RTK)) {
         const refreshToken = Cookies.get(RTK);
-        const res = await noTokenAxios.post<{ access_token: string }>(
-          "/refresh",
+        const res = await noTokenAxios.post<{ access: string }>(
+          "/users/token/refresh/",
           {
-            // eslint-disable-next-line camelcase
-            refresh_token: refreshToken,
+            refresh: refreshToken,
           },
         );
-        Cookies.set(ATK, res.data.access_token, {
+        Cookies.set(ATK, res.data.access, {
           expires: accessTokenExpirationDate,
         });
 
-        config.headers["Authorization"] = `Bearer ${res.data.access_token}`;
+        config.headers["Authorization"] = `Bearer ${res.data.access}`;
       }
     }
 
