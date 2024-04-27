@@ -3,7 +3,7 @@ import Image from "next/image";
 import EditCartSection from "@/app/user/cart/components/EditCartSection";
 import { OrderRes } from "@/common/types/general";
 import { useState } from "react";
-import { editCartItemAPI } from "@/app/user/cart/api";
+import { deleteCartItemAPI, editCartItemAPI } from "@/app/user/cart/api";
 import useCart from "@/common/store/useCart";
 
 type Props = {
@@ -16,7 +16,16 @@ const UserCartContent = (props: Props) => {
   const cartItems = useCart();
 
   const onRemoveHandler = async (phoneId: number) => {
-    console.log(phoneId);
+    setIsLoading(true);
+    const isSuccessful = await deleteCartItemAPI(phoneId);
+    if (isSuccessful && cartData) {
+      const newCartItems = cartData.items.filter(
+        (item) => item.mobile.id !== phoneId,
+      );
+      cartItems.setCart({ items: newCartItems });
+      setCartData({ items: newCartItems });
+    }
+    setIsLoading(false);
   };
 
   const onEditHandler = async (phoneId: number, count: number) => {

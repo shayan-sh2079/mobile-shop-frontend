@@ -41,6 +41,7 @@ const Button = ({
   iconPos = "right",
   icon,
   isLoading,
+  disabled,
   ...btnProps
 }: Props) => {
   return (
@@ -51,7 +52,7 @@ const Button = ({
         " " +
         className
       }
-      disabled={!!isLoading}
+      disabled={!!isLoading || disabled}
       type={"button"}
       {...btnProps}
     >

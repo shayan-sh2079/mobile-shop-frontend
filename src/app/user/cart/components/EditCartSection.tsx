@@ -56,6 +56,7 @@ const EditCartSection = (props: Props) => {
         <Button
           onClick={() => props.onEdit(props.phoneId, count)}
           isLoading={props.isLoading}
+          disabled={count === props.count}
         >
           Modify Cart
         </Button>
