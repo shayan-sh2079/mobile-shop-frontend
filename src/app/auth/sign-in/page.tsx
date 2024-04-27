@@ -8,13 +8,13 @@ import {
   requiredFieldValidation,
 } from "@/common/functions/formValidations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getOrderAPI, signInAPI } from "@/app/auth/sign-in/api";
+import { signInAPI } from "@/app/auth/sign-in/api";
 import { useState } from "react";
 import EyeSlashIcon from "@/common/icons/EyeSlashIcon";
 import EyeIcon from "@/common/icons/EyeIcon";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { addToCartAPI } from "@/common/api/cart";
+import { addToCartAPI, getOrderAPI } from "@/common/api/cart";
 import useCart from "@/common/store/useCart";
 
 type Inputs = {

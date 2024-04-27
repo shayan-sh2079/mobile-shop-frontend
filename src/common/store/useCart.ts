@@ -8,6 +8,7 @@ type State = { phones: number[]; quantities: number[]; isAnonymous: boolean };
 type Actions = {
   setCart: (data: OrderRes) => void;
   setAnonCart: (data: { phones: number[]; quantities: number[] }) => void;
+  removeCart: () => void;
 };
 
 const useCart = create(
@@ -28,6 +29,7 @@ const useCart = create(
           quantities: data.quantities,
           isAnonymous: true,
         }),
+      removeCart: () => set({ phones: [], quantities: [] }),
     }),
     {
       name: CART,

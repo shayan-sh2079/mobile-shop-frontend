@@ -21,3 +21,13 @@ export const addToCartAPI = async (
       toast.error(e.response?.data.message || e.message || FAIL_MSG);
   }
 };
+
+export const getOrderAPI = async () => {
+  try {
+    const res = await axiosWithToken.get<OrderRes>("/orders/order/");
+    return res.data;
+  } catch (e: unknown) {
+    if (e instanceof AxiosError && typeof window !== "undefined")
+      toast.error(e.response?.data.message || e.message || FAIL_MSG);
+  }
+};

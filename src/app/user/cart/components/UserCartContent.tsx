@@ -47,7 +47,10 @@ const UserCartContent = (props: Props) => {
     setIsLoading(true);
     const isSuccessful = await buyItemsAPI();
     setIsLoading(false);
-    if (isSuccessful) router.push("/user/history/");
+    if (isSuccessful) {
+      cartItems.removeCart();
+      router.push("/user/history/");
+    }
   };
 
   if (!cartData?.items.length) return <div>You have no items in your cart</div>;
